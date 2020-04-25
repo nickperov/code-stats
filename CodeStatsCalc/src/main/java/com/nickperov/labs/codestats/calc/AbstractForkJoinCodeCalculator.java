@@ -25,7 +25,7 @@ public abstract class AbstractForkJoinCodeCalculator<T extends CodeStats, RT ext
     }
 
     public Function<Integer, Integer> getThresholdFunction() {
-        return numberOfFiles -> Math.min(100000, Math.toIntExact(numberOfFiles * 10 / Runtime.getRuntime().availableProcessors()));
+        return numberOfFiles -> Math.min(10000, Math.toIntExact(numberOfFiles * 10 / Runtime.getRuntime().availableProcessors()));
     }
 
     @Override
