@@ -36,12 +36,15 @@ public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implement
     CodeStats calcSourceFile(File file) {
         if (!file.isFile())
             return buildCodeStats(0, 0L);
-
+        
+        // TODO count comments
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
-            return buildCodeStats(1, fileReader.lines().count());
+            long numOfLines = fileReader.lines().filter(line -> !line.isBlank()).count();
+            return buildCodeStats(1, numOfLines);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
         return buildCodeStats(0, 0L);
     }
 

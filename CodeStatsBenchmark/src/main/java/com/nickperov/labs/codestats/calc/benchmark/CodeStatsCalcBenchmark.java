@@ -23,13 +23,13 @@ public class CodeStatsCalcBenchmark {
         ForkJoinImmutableTh_1000, ForkJoinMutableTh_100000
     }
 
-    @Param({"../", "../../", "../../../"})
-    private String path;
-
     @Param({"STRecursiveMutable", "STRecursiveImmutable", "StreamSeqMutable", "StreamSeqImmutable",
             "StreamParallelImmutable", "StreamParallelMutable", "ForkJoinImmutable", "ForkJoinMutable", "CoroutinesImmutable",
             "CoroutinesMutable", "ForkJoinImmutableTh_1000", "ForkJoinMutableTh_100000",})
     private CalculatorType calcType;
+
+    @Param({"../", "../../", "../../../"})
+    private String path;
 
     private CodeStatsCalculator codeStatsCalculator;
 
