@@ -10,7 +10,7 @@ public class StreamParallelImmutableCodeStatsCalculator extends AbstractStreamPa
 
     @Override
     ImmutableCodeStats initCodeStats() {
-        return buildCodeStats(0, 0L);
+        return buildCodeStats(0, 0L, 0L);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class StreamParallelImmutableCodeStatsCalculator extends AbstractStreamPa
     }
 
     @Override
-    ImmutableCodeStats buildCodeStats(int numOfFiles, long numOfLines) {
-        return new ImmutableCodeStats(numOfFiles, numOfLines);
+    ImmutableCodeStats buildCodeStats(int numOfFiles, long numOfCodeLines, long numberOfCommentLines) {
+        return new ImmutableCodeStats(numOfFiles, numOfCodeLines, numberOfCommentLines);
     }
 }

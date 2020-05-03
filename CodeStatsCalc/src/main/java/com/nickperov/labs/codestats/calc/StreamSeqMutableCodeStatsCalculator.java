@@ -25,7 +25,7 @@ public class StreamSeqMutableCodeStatsCalculator extends AbstractStreamSeqCodeSt
     }
 
     @Override
-    MutableCodeStats buildCodeStats(int numOfFiles, long numOfLines) {
-        return new MutableCodeStats(numOfFiles, numOfLines);
+    MutableCodeStats buildCodeStats(int numOfFiles, long numOfCodeLines, long numberOfCommentLines) {
+        return new MutableCodeStats(numOfFiles, numOfCodeLines, numberOfCommentLines);
     }
 }

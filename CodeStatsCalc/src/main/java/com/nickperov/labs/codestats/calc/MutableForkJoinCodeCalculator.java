@@ -13,7 +13,7 @@ import static com.nickperov.labs.codestats.calc.MutableForkJoinCodeCalculator.Mu
 
 public class MutableForkJoinCodeCalculator extends AbstractForkJoinCodeCalculator<MutableAtomicCodeStats, MutableCodeStatsTask> {
 
-    private final MutableAtomicCodeStats codeStatsAccumulator = new MutableAtomicCodeStats(0, 0L);
+    private final MutableAtomicCodeStats codeStatsAccumulator = new MutableAtomicCodeStats(0, 0L, 0L);
 
     public MutableForkJoinCodeCalculator() {
     }

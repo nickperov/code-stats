@@ -10,7 +10,7 @@ public class StreamParallelMutableCodeStatsCalculator extends AbstractStreamPara
 
     @Override
     MutableAtomicCodeStats initCodeStats() {
-        return new MutableAtomicCodeStats(0, 0L);
+        return new MutableAtomicCodeStats(0, 0L, 0L);
     }
 
     @Override

@@ -19,7 +19,7 @@ class CodeStatsCalculatorTest {
 
     private fun testCodeStatsCalculator(codeCalculator: CodeStatsCalculator) {
         val codeStats = codeCalculator.calcDirectory(getDirectory())
-        println("${codeStats.numberOfFiles()} - ${codeStats.numberOfLines()}")
+        println("${codeStats.numberOfFiles()} - ${codeStats.numberOfCodeLines()} - ${codeStats.numberOfCommentLines()}")
         //     assertEquals(numOfFiles, codeStats.numberOfFiles())
         //     assertEquals(numOfLines, codeStats.numberOfLines())
     }
@@ -63,7 +63,7 @@ class CodeStatsCalculatorTest {
     fun testForkJoinMutableCodeStatsCalc() {
         testCodeStatsCalculator(MutableForkJoinCodeCalculator())
     }
-    
+
     @Test
     fun testForkJoinImmutableCodeStatsThreshold() {
         testCodeStatsCalculator(ImmutableForkJoinCodeCalculator(4))

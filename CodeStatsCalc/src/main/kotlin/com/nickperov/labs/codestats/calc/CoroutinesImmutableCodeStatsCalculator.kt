@@ -63,11 +63,11 @@ abstract class AbstractCoroutinesCodeStatsCalculator<T : CodeStats> : AbstractCo
 class CoroutinesImmutableCodeStatsCalculator : AbstractCoroutinesCodeStatsCalculator<ImmutableCodeStats>() {
 
     override fun initCodeStats(): ImmutableCodeStats {
-        return buildCodeStats(0, 0L)
+        return buildCodeStats(0, 0L, 0L)
     }
 
-    override fun buildCodeStats(numOfFiles: Int, numOfLines: Long): ImmutableCodeStats {
-        return ImmutableCodeStats(numOfFiles, numOfLines)
+    override fun buildCodeStats(numOfFiles: Int, numOfCodeLines: Long, numOfCommentLines: Long): ImmutableCodeStats {
+        return ImmutableCodeStats(numOfFiles, numOfCodeLines, numOfCommentLines)
     }
 
     override fun collectDirectoryResult(
@@ -81,11 +81,11 @@ class CoroutinesImmutableCodeStatsCalculator : AbstractCoroutinesCodeStatsCalcul
 class CoroutinesMutableCodeStatsCalculator : AbstractCoroutinesCodeStatsCalculator<MutableAtomicCodeStats>() {
 
     override fun initCodeStats(): MutableAtomicCodeStats {
-        return buildCodeStats(0, 0L)
+        return buildCodeStats(0, 0L, 0L)
     }
 
-    override fun buildCodeStats(numOfFiles: Int, numOfLines: Long): MutableAtomicCodeStats {
-        return MutableAtomicCodeStats(numOfFiles, numOfLines)
+    override fun buildCodeStats(numOfFiles: Int, numOfCodeLines: Long,  numOfCommentLines: Long): MutableAtomicCodeStats {
+        return MutableAtomicCodeStats(numOfFiles, numOfCodeLines, numOfCommentLines)
     }
 
     override fun collectDirectoryResult(

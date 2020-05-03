@@ -18,7 +18,7 @@ public abstract class AbstractStreamParallelCodeStatsCalculator<T extends CodeSt
         return this::calcSourceFile;
     }
 
-    CodeStats buildCodeStats(int numOfFiles, long numOfLines) {
+    CodeStats buildCodeStats(int numOfFiles, long numOfCodeLines, long numberOfCommentLines) {
         return new CodeStats() {
             @Override
             public int numberOfFiles() {
@@ -26,8 +26,13 @@ public abstract class AbstractStreamParallelCodeStatsCalculator<T extends CodeSt
             }
 
             @Override
-            public long numberOfLines() {
-                return numOfLines;
+            public long numberOfCodeLines() {
+                return numOfCodeLines;
+            }
+            
+            @Override
+            public long numberOfCommentLines() {
+                return numberOfCommentLines;
             }
         };
     }

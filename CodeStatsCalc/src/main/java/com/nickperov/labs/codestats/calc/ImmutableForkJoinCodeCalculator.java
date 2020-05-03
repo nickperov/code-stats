@@ -27,7 +27,7 @@ public class ImmutableForkJoinCodeCalculator extends AbstractForkJoinCodeCalcula
 
     @Override
     ImmutableCodeStats initCodeStats() {
-        return new ImmutableCodeStats(0, 0L);
+        return new ImmutableCodeStats(0, 0L, 0L);
     }
 
     static class ImmutableCodeStatsTask extends CodeStatsTask<ImmutableCodeStats> {

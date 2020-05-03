@@ -50,7 +50,7 @@ class RecursiveImmutableCodeStatsCalculator : AbstractRecursiveCodeStatsCalculat
         }
     }
 
-    override fun initCodeStats() = ImmutableCodeStats(0, 0L)
+    override fun initCodeStats() = ImmutableCodeStats(0, 0L, 0L)
 }
 
 

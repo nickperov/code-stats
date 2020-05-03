@@ -19,5 +19,5 @@ public abstract class AbstractStreamSeqCodeStatsCalculator<T extends CodeStats> 
     }
 
     @Override
-    abstract T buildCodeStats(int numOfFiles, long numOfLines);
+    abstract T buildCodeStats(int numOfFiles, long numOfCodeLines, long numberOfCommentLines);
 }
