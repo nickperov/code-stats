@@ -1,6 +1,6 @@
 package com.nickperov.labs.codestats.calc;
 
-import com.nickperov.labs.codestats.calc.model.CodeStats;
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class AbstractIterativeCodeStatsCalculator<T extends CodeStats> extends AbstractCodeStatsCalculator<T> {
+public abstract class AbstractIterativeCodeStatsCalculator<T extends SourceCodeStats> extends AbstractCodeStatsCalculator<T> {
     
     static List<File> collectSrcFiles(File directory) {
         List<File> srcFiles = new ArrayList<>();

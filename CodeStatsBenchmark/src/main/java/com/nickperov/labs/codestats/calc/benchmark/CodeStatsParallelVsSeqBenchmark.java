@@ -2,7 +2,7 @@ package com.nickperov.labs.codestats.calc.benchmark;
 
 import com.nickperov.labs.codestats.calc.MutableForkJoinCodeCalculator;
 import com.nickperov.labs.codestats.calc.RecursiveImmutableCodeStatsCalculator;
-import com.nickperov.labs.codestats.calc.model.CodeStats;
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
 import org.openjdk.jmh.annotations.*;
 
 import java.io.File;
@@ -18,12 +18,12 @@ public class CodeStatsParallelVsSeqBenchmark {
     private String path = "../../";
 
     @Benchmark
-    public CodeStats calcCodeStatsSTRecursiveImmutable() {
+    public SourceCodeStats calcCodeStatsSTRecursiveImmutable() {
         return new RecursiveImmutableCodeStatsCalculator().calcDirectory(new File(path));
     }
 
     @Benchmark
-    public CodeStats calcCodeStatsForkJoinMutable() {
+    public SourceCodeStats calcCodeStatsForkJoinMutable() {
         return new MutableForkJoinCodeCalculator(10).calcDirectory(new File(path));
     }
 }

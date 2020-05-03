@@ -1,7 +1,7 @@
 package com.nickperov.labs.codestats.calc;
 
-import com.nickperov.labs.codestats.calc.model.CodeStats;
-import com.nickperov.labs.codestats.calc.model.ImmutableCodeStats;
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
+import com.nickperov.labs.codestats.calc.model.ImmutableSourceCodeStats;
 import kotlin.Pair;
 
 import java.io.File;
@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 import static com.nickperov.labs.codestats.calc.ImmutableForkJoinCodeCalculator.ImmutableCodeStatsTask;
 
-public class ImmutableForkJoinCodeCalculator extends AbstractForkJoinCodeCalculator<ImmutableCodeStats, ImmutableCodeStatsTask> {
+public class ImmutableForkJoinCodeCalculator extends AbstractForkJoinCodeCalculator<ImmutableSourceCodeStats, ImmutableCodeStatsTask> {
 
     public ImmutableForkJoinCodeCalculator() {
     }
@@ -26,29 +26,29 @@ public class ImmutableForkJoinCodeCalculator extends AbstractForkJoinCodeCalcula
     }
 
     @Override
-    ImmutableCodeStats initCodeStats() {
-        return new ImmutableCodeStats(0, 0L, 0L);
+    ImmutableSourceCodeStats initCodeStats() {
+        return new ImmutableSourceCodeStats(0, 0L, 0L);
     }
 
-    static class ImmutableCodeStatsTask extends CodeStatsTask<ImmutableCodeStats> {
+    static class ImmutableCodeStatsTask extends CodeStatsTask<ImmutableSourceCodeStats> {
 
-        public ImmutableCodeStatsTask(int threshold, List<File> srcFiles, int start, int end, Function<File, CodeStats> srcFileCalculator, Supplier<ImmutableCodeStats> codeStatsSupplier) {
+        public ImmutableCodeStatsTask(int threshold, List<File> srcFiles, int start, int end, Function<File, SourceCodeStats> srcFileCalculator, Supplier<ImmutableSourceCodeStats> codeStatsSupplier) {
             super(threshold, srcFiles, start, end, srcFileCalculator, codeStatsSupplier);
         }
 
         @Override
-        Pair<CodeStatsTask<ImmutableCodeStats>, CodeStatsTask<ImmutableCodeStats>> createSubTasks(int middle) {
+        Pair<CodeStatsTask<ImmutableSourceCodeStats>, CodeStatsTask<ImmutableSourceCodeStats>> createSubTasks(int middle) {
             return new Pair<>(new ImmutableCodeStatsTask(this.threshold, srcFiles, start, middle, this.srcFileCalculator, this.codeStatsSupplier),
                     new ImmutableCodeStatsTask(this.threshold, srcFiles, middle, end, this.srcFileCalculator, this.codeStatsSupplier));
         }
 
         @Override
-        ImmutableCodeStats joinResults(ImmutableCodeStats first, CodeStats second) {
+        ImmutableSourceCodeStats joinResults(ImmutableSourceCodeStats first, SourceCodeStats second) {
             return first.append(second);
         }
 
         @Override
-        ImmutableCodeStats computeCodeStats() {
+        ImmutableSourceCodeStats computeCodeStats() {
             var currentCodeStats = codeStatsSupplier.get();
             for (int i = start; i < end; i++) {
                 currentCodeStats = currentCodeStats.append(srcFileCalculator.apply(srcFiles.get(i)));

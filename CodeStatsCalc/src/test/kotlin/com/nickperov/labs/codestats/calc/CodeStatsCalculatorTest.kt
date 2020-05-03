@@ -4,7 +4,6 @@ import com.nickperov.labs.codestats.calc.model.CodeStatsCalculator
 import org.junit.Test
 import java.io.File
 
-
 class CodeStatsCalculatorTest {
 
     private val path = "../"

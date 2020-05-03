@@ -1,23 +1,23 @@
 package com.nickperov.labs.codestats.calc
 
-import com.nickperov.labs.codestats.calc.model.CodeStats
-import com.nickperov.labs.codestats.calc.model.ImmutableCodeStats
-import com.nickperov.labs.codestats.calc.model.MutableCodeStats
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats
+import com.nickperov.labs.codestats.calc.model.ImmutableSourceCodeStats
+import com.nickperov.labs.codestats.calc.model.MutableSourceCodeStats
 import java.io.File
 import java.util.function.Supplier
 
-abstract class AbstractRecursiveCodeStatsCalculator<T : CodeStats> : AbstractCodeStatsCalculator<T>() {
+abstract class AbstractRecursiveCodeStatsCalculator<T : SourceCodeStats> : AbstractCodeStatsCalculator<T>() {
 
-    override fun calcDirectory(file: File, codeStatsSupplier: Supplier<T>): CodeStats {
+    override fun calcDirectory(file: File, codeStatsSupplier: Supplier<T>): SourceCodeStats {
         return calcDirectory(file, codeStatsSupplier.get())
     }
 
-    abstract fun calcDirectory(file: File, codeStats: T): CodeStats
+    abstract fun calcDirectory(file: File, codeStats: T): SourceCodeStats
 }
 
-class RecursiveMutableCodeStatsCalculator : AbstractRecursiveCodeStatsCalculator<MutableCodeStats>() {
+class RecursiveMutableCodeStatsCalculator : AbstractRecursiveCodeStatsCalculator<MutableSourceCodeStats>() {
 
-    override fun calcDirectory(file: File, codeStats: MutableCodeStats): CodeStats {
+    override fun calcDirectory(file: File, codeStats: MutableSourceCodeStats): SourceCodeStats {
         if (file.isFile && checkFileName(file.name)) {
             codeStats.append(calcSourceFile(file))
         } else if (file.isDirectory) {
@@ -27,12 +27,12 @@ class RecursiveMutableCodeStatsCalculator : AbstractRecursiveCodeStatsCalculator
         return codeStats
     }
 
-    override fun initCodeStats() = MutableCodeStats()
+    override fun initCodeStats() = MutableSourceCodeStats()
 }
 
-class RecursiveImmutableCodeStatsCalculator : AbstractRecursiveCodeStatsCalculator<ImmutableCodeStats>() {
+class RecursiveImmutableCodeStatsCalculator : AbstractRecursiveCodeStatsCalculator<ImmutableSourceCodeStats>() {
 
-    override fun calcDirectory(file: File, codeStats: ImmutableCodeStats): CodeStats {
+    override fun calcDirectory(file: File, codeStats: ImmutableSourceCodeStats): SourceCodeStats {
         return when {
             file.isFile -> {
                 if (checkFileName(file.name))
@@ -50,7 +50,7 @@ class RecursiveImmutableCodeStatsCalculator : AbstractRecursiveCodeStatsCalculat
         }
     }
 
-    override fun initCodeStats() = ImmutableCodeStats(0, 0L, 0L)
+    override fun initCodeStats() = ImmutableSourceCodeStats(0, 0L, 0L)
 }
 
 

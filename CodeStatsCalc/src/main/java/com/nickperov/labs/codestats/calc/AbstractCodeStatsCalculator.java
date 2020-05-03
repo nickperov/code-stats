@@ -1,8 +1,8 @@
 package com.nickperov.labs.codestats.calc;
 
-import com.nickperov.labs.codestats.calc.model.CodeStats;
+import com.nickperov.labs.codestats.calc.model.LineCodeStats;
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
 import com.nickperov.labs.codestats.calc.model.CodeStatsCalculator;
-import kotlin.Triple;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -12,14 +12,14 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.function.Supplier;
 
-public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implements CodeStatsCalculator {
+public abstract class AbstractCodeStatsCalculator<T extends SourceCodeStats> implements CodeStatsCalculator {
 
     private static final String javaFile = ".java";
     private static final String kotlinFile = ".kt";
     
     @NotNull
     @Override
-    public CodeStats calcDirectory(final File directory) {
+    public SourceCodeStats calcDirectory(final File directory) {
         if (!directory.isDirectory())
             throw new RuntimeException("Not a directory");
 
@@ -28,31 +28,31 @@ public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implement
 
     abstract T initCodeStats();
 
-    abstract CodeStats calcDirectory(final File file, final Supplier<T> codeStatsSupplier);
+    abstract SourceCodeStats calcDirectory(final File file, final Supplier<T> codeStatsSupplier);
 
     static boolean checkFileName(final String fileName) {
         return (fileName.endsWith(javaFile) || fileName.endsWith(kotlinFile));
     }
 
-    CodeStats calcSourceFile(final File file) {
+    SourceCodeStats calcSourceFile(final File file) {
         if (!file.isFile())
             return buildCodeStats(0, 0L, 0L);
             
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
             var isCommentBlock = false;
-            long numberOfCommentLines = 0L;
-            long numOfCodeLines = 0L;
+            var numberOfCommentLines = 0L;
+            var numOfCodeLines = 0L;
             final Iterator<String> lineIterator = fileReader.lines().filter(line -> !line.isBlank()).iterator();
             while (lineIterator.hasNext()) {
                 final var line = lineIterator.next();
                 final var lineStats = calcLine(isCommentBlock, line);
-                // TODO replace triple with special class;
-                numOfCodeLines += lineStats.getFirst();
-                numberOfCommentLines += lineStats.getSecond();
-                isCommentBlock = lineStats.getThird();
+                numOfCodeLines += lineStats.numberOfCodeLines();
+                numberOfCommentLines += lineStats.numberOfCommentLines();
+                isCommentBlock = lineStats.isOpenCommentBlock();
             }
             return buildCodeStats(1, numOfCodeLines, numberOfCommentLines);
         } catch (IOException e) {
+            // TODO throw exception
             e.printStackTrace();
         }
 
@@ -62,7 +62,7 @@ public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implement
     // TODO check empty comments 
     
     // Return number of code lines, comment lines and is comment open or not 
-    private static Triple<Integer, Integer, Boolean> calcLine(final boolean isCommentBlock, final String line) {
+    private static LineCodeStats calcLine(final boolean isCommentBlock, final String line) {
         
         var isOpenComment = isCommentBlock;
         var isComment = false;
@@ -104,11 +104,11 @@ public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implement
                 }
             }
         }
-        return new Triple<>(numOfCodeLines, numOfCommentLines, isOpenComment);
+        return new LineCodeStats(numOfCodeLines, numOfCommentLines, isOpenComment);
     }
     
-    CodeStats buildCodeStats(final int numOfFiles, final long numOfCodeLines, final long numberOfCommentLines) {
-        return new CodeStats() {
+    SourceCodeStats buildCodeStats(final int numOfFiles, final long numOfCodeLines, final long numberOfCommentLines) {
+        return new SourceCodeStats() {
 
             @Override
             public int numberOfFiles() {

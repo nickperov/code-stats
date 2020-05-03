@@ -1,7 +1,7 @@
 package com.nickperov.labs.codestats.calc;
 
-import com.nickperov.labs.codestats.calc.model.CodeStats;
-import com.nickperov.labs.codestats.calc.model.MutableAtomicCodeStats;
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
+import com.nickperov.labs.codestats.calc.model.MutableAtomicSourceCodeStats;
 import kotlin.Pair;
 
 import java.io.File;
@@ -11,9 +11,9 @@ import java.util.function.Supplier;
 
 import static com.nickperov.labs.codestats.calc.MutableForkJoinCodeCalculator.MutableCodeStatsTask;
 
-public class MutableForkJoinCodeCalculator extends AbstractForkJoinCodeCalculator<MutableAtomicCodeStats, MutableCodeStatsTask> {
+public class MutableForkJoinCodeCalculator extends AbstractForkJoinCodeCalculator<MutableAtomicSourceCodeStats, MutableCodeStatsTask> {
 
-    private final MutableAtomicCodeStats codeStatsAccumulator = new MutableAtomicCodeStats(0, 0L, 0L);
+    private final MutableAtomicSourceCodeStats codeStatsAccumulator = new MutableAtomicSourceCodeStats(0, 0L, 0L);
 
     public MutableForkJoinCodeCalculator() {
     }
@@ -28,29 +28,29 @@ public class MutableForkJoinCodeCalculator extends AbstractForkJoinCodeCalculato
     }
 
     @Override
-    MutableAtomicCodeStats initCodeStats() {
+    MutableAtomicSourceCodeStats initCodeStats() {
         return codeStatsAccumulator;
     }
 
-    static class MutableCodeStatsTask extends CodeStatsTask<MutableAtomicCodeStats> {
+    static class MutableCodeStatsTask extends CodeStatsTask<MutableAtomicSourceCodeStats> {
 
-        public MutableCodeStatsTask(int threshold, List<File> srcFiles, int start, int end, Function<File, CodeStats> srcFileCalculator, Supplier<MutableAtomicCodeStats> codeStatsSupplier) {
+        public MutableCodeStatsTask(int threshold, List<File> srcFiles, int start, int end, Function<File, SourceCodeStats> srcFileCalculator, Supplier<MutableAtomicSourceCodeStats> codeStatsSupplier) {
             super(threshold, srcFiles, start, end, srcFileCalculator, codeStatsSupplier);
         }
 
         @Override
-        Pair<CodeStatsTask<MutableAtomicCodeStats>, CodeStatsTask<MutableAtomicCodeStats>> createSubTasks(int middle) {
+        Pair<CodeStatsTask<MutableAtomicSourceCodeStats>, CodeStatsTask<MutableAtomicSourceCodeStats>> createSubTasks(int middle) {
             return new Pair<>(new MutableCodeStatsTask(this.threshold, srcFiles, start, middle, this.srcFileCalculator, this.codeStatsSupplier),
                     new MutableCodeStatsTask(this.threshold, srcFiles, middle, end, this.srcFileCalculator, this.codeStatsSupplier));
         }
 
         @Override
-        MutableAtomicCodeStats joinResults(MutableAtomicCodeStats first, CodeStats second) {
+        MutableAtomicSourceCodeStats joinResults(MutableAtomicSourceCodeStats first, SourceCodeStats second) {
             return this.codeStatsSupplier.get();
         }
 
         @Override
-        MutableAtomicCodeStats computeCodeStats() {
+        MutableAtomicSourceCodeStats computeCodeStats() {
             final var currentCodeStats = codeStatsSupplier.get();
             for (int i = start; i < end; i++) {
                 currentCodeStats.append(srcFileCalculator.apply(srcFiles.get(i)));

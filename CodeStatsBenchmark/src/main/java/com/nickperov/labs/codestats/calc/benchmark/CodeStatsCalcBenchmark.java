@@ -1,7 +1,7 @@
 package com.nickperov.labs.codestats.calc.benchmark;
 
 import com.nickperov.labs.codestats.calc.*;
-import com.nickperov.labs.codestats.calc.model.CodeStats;
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
 import com.nickperov.labs.codestats.calc.model.CodeStatsCalculator;
 import org.openjdk.jmh.annotations.*;
 
@@ -76,7 +76,7 @@ public class CodeStatsCalcBenchmark {
     }
 
     @Benchmark
-    public CodeStats calcCodeStats() {
+    public SourceCodeStats calcCodeStats() {
         return codeStatsCalculator.calcDirectory(new File(path));
     }
 }

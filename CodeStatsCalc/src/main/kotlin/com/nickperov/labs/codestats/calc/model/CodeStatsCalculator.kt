@@ -4,23 +4,23 @@ import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicLong
 
-interface CodeStats {
+interface SourceCodeStats {
     fun numberOfCodeLines(): Long
     fun numberOfCommentLines(): Long
     fun numberOfFiles(): Int
 }
 
 interface CodeStatsCalculator {
-    fun calcDirectory(directory: File): CodeStats
+    fun calcDirectory(directory: File): SourceCodeStats
 }
 
-class MutableCodeStats(
+class MutableSourceCodeStats(
     private var numberOfFiles: Int = 0,
     private var numberOfCodeLines: Long = 0L,
     private var numberOfCommentLines: Long = 0L
-) : CodeStats {
+) : SourceCodeStats {
 
-    fun append(stats: CodeStats) {
+    fun append(stats: SourceCodeStats) {
         numberOfCodeLines += stats.numberOfCodeLines()
         numberOfCommentLines += stats.numberOfCommentLines()
         numberOfFiles += stats.numberOfFiles()
@@ -31,14 +31,15 @@ class MutableCodeStats(
     override fun numberOfFiles() = numberOfFiles
 }
 
-class MutableAtomicCodeStats(numOfFiles: Int, numberOfCodeLines: Long, numberOfCommentLines: Long) : CodeStats {
+class MutableAtomicSourceCodeStats(numOfFiles: Int, numberOfCodeLines: Long, numberOfCommentLines: Long) :
+    SourceCodeStats {
 
     private val numberOfFiles: AtomicInteger = AtomicInteger(numOfFiles)
     private val numberOfCodeLines: AtomicLong = AtomicLong(numberOfCodeLines)
     private val numberOfCommentLines: AtomicLong = AtomicLong(numberOfCommentLines)
 
     @Synchronized
-    fun append(stats: CodeStats) {
+    fun append(stats: SourceCodeStats) {
         numberOfFiles.addAndGet(stats.numberOfFiles())
         numberOfCodeLines.addAndGet(stats.numberOfCodeLines())
         numberOfCommentLines.addAndGet(stats.numberOfCommentLines())
@@ -49,21 +50,32 @@ class MutableAtomicCodeStats(numOfFiles: Int, numberOfCodeLines: Long, numberOfC
     override fun numberOfFiles() = numberOfFiles.get()
 }
 
-class ImmutableCodeStats(
+data class ImmutableSourceCodeStats(
     private val numberOfFiles: Int,
     private val numberOfCodeLines: Long,
     private val numberOfCommentLines: Long
-) : CodeStats {
+) : SourceCodeStats {
 
     override fun numberOfCodeLines() = numberOfCodeLines
     override fun numberOfCommentLines() = numberOfCommentLines
     override fun numberOfFiles() = numberOfFiles
 
-    fun append(stats: CodeStats): ImmutableCodeStats {
-        return ImmutableCodeStats(
+    fun append(stats: SourceCodeStats): ImmutableSourceCodeStats {
+        return ImmutableSourceCodeStats(
             numberOfFiles + stats.numberOfFiles(),
             numberOfCodeLines + stats.numberOfCodeLines(),
             numberOfCommentLines + stats.numberOfCommentLines()
         )
     }
 }
+
+data class LineCodeStats(
+    private val numberOfCodeLines: Int,
+    private val numberOfCommentLines: Int,
+    private val commentBlock: Boolean
+) {
+    fun numberOfCodeLines() = numberOfCodeLines
+    fun numberOfCommentLines() = numberOfCommentLines
+    fun isOpenCommentBlock() = commentBlock
+}
+

@@ -1,7 +1,7 @@
 package com.nickperov.labs.codestats.calc.benchmark;
 
 import com.nickperov.labs.codestats.calc.*;
-import com.nickperov.labs.codestats.calc.model.CodeStats;
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
 import org.openjdk.jmh.annotations.*;
 
 import java.io.File;
@@ -22,22 +22,22 @@ public class CodeStatsForkJoinCalcBenchmark {
     private Integer threshold;
 
     @Benchmark
-    public CodeStats calcCodeStatsImmutable() {
+    public SourceCodeStats calcCodeStatsImmutable() {
         return new ImmutableForkJoinCodeCalculator(threshold).calcDirectory(new File(path));
     }
 
     @Benchmark
-    public CodeStats calcCodeStatsMutable() {
+    public SourceCodeStats calcCodeStatsMutable() {
         return new MutableForkJoinCodeCalculator(threshold).calcDirectory(new File(path));
     }
 
     @Benchmark
-    public CodeStats calcCodeStatsImmutableFormula() {
+    public SourceCodeStats calcCodeStatsImmutableFormula() {
         return new ImmutableForkJoinCodeCalculator().calcDirectory(new File(path));
     }
 
     @Benchmark
-    public CodeStats calcCodeStatsMutableFormula() {
+    public SourceCodeStats calcCodeStatsMutableFormula() {
         return new MutableForkJoinCodeCalculator().calcDirectory(new File(path));
     }
 }

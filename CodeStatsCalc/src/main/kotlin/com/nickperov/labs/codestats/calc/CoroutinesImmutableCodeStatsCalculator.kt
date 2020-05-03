@@ -1,16 +1,16 @@
 package com.nickperov.labs.codestats.calc
 
-import com.nickperov.labs.codestats.calc.model.CodeStats
-import com.nickperov.labs.codestats.calc.model.ImmutableCodeStats
-import com.nickperov.labs.codestats.calc.model.MutableAtomicCodeStats
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats
+import com.nickperov.labs.codestats.calc.model.ImmutableSourceCodeStats
+import com.nickperov.labs.codestats.calc.model.MutableAtomicSourceCodeStats
 import kotlinx.coroutines.*
 import java.io.File
 import java.util.function.Supplier
 
 
-abstract class AbstractCoroutinesCodeStatsCalculator<T : CodeStats> : AbstractCodeStatsCalculator<T>() {
+abstract class AbstractCoroutinesCodeStatsCalculator<T : SourceCodeStats> : AbstractCodeStatsCalculator<T>() {
 
-    override fun calcDirectory(file: File, codeStatsSupplier: Supplier<T>): CodeStats {
+    override fun calcDirectory(file: File, codeStatsSupplier: Supplier<T>): SourceCodeStats {
         return runBlocking {
             calcDirectoryAsync(file, codeStatsSupplier).await()
         }
@@ -22,7 +22,7 @@ abstract class AbstractCoroutinesCodeStatsCalculator<T : CodeStats> : AbstractCo
         }
     }
 
-    private suspend fun calcAllDirectoryFiles(file: File, codeStatsSupplier: Supplier<T>): List<CodeStats>? {
+    private suspend fun calcAllDirectoryFiles(file: File, codeStatsSupplier: Supplier<T>): List<SourceCodeStats>? {
         return file.listFiles()?.mapNotNull {
             when {
                 it.isDirectory -> {
@@ -45,54 +45,54 @@ abstract class AbstractCoroutinesCodeStatsCalculator<T : CodeStats> : AbstractCo
 
     }
 
-    abstract fun collectDirectoryResult(directoryCodeStats: List<CodeStats>, codeStats: T): T
+    abstract fun collectDirectoryResult(directorySourceCodeStats: List<SourceCodeStats>, codeStats: T): T
 
-    private fun calcSourceFileAsync(file: File): Deferred<CodeStats> {
+    private fun calcSourceFileAsync(file: File): Deferred<SourceCodeStats> {
         return GlobalScope.async {
             calcSourceFileSuspend(file)
         }
     }
 
-    private suspend fun calcSourceFileSuspend(file: File): CodeStats {
+    private suspend fun calcSourceFileSuspend(file: File): SourceCodeStats {
         return withContext(Dispatchers.IO) {
             calcSourceFile(file)
         }
     }
 }
 
-class CoroutinesImmutableCodeStatsCalculator : AbstractCoroutinesCodeStatsCalculator<ImmutableCodeStats>() {
+class CoroutinesImmutableCodeStatsCalculator : AbstractCoroutinesCodeStatsCalculator<ImmutableSourceCodeStats>() {
 
-    override fun initCodeStats(): ImmutableCodeStats {
+    override fun initCodeStats(): ImmutableSourceCodeStats {
         return buildCodeStats(0, 0L, 0L)
     }
 
-    override fun buildCodeStats(numOfFiles: Int, numOfCodeLines: Long, numOfCommentLines: Long): ImmutableCodeStats {
-        return ImmutableCodeStats(numOfFiles, numOfCodeLines, numOfCommentLines)
+    override fun buildCodeStats(numOfFiles: Int, numOfCodeLines: Long, numOfCommentLines: Long): ImmutableSourceCodeStats {
+        return ImmutableSourceCodeStats(numOfFiles, numOfCodeLines, numOfCommentLines)
     }
 
     override fun collectDirectoryResult(
-        directoryCodeStats: List<CodeStats>,
-        codeStats: ImmutableCodeStats
-    ): ImmutableCodeStats {
-        return directoryCodeStats.fold(codeStats) { left, right -> left.append(right) }
+        directorySourceCodeStats: List<SourceCodeStats>,
+        codeStats: ImmutableSourceCodeStats
+    ): ImmutableSourceCodeStats {
+        return directorySourceCodeStats.fold(codeStats) { left, right -> left.append(right) }
     }
 }
 
-class CoroutinesMutableCodeStatsCalculator : AbstractCoroutinesCodeStatsCalculator<MutableAtomicCodeStats>() {
+class CoroutinesMutableCodeStatsCalculator : AbstractCoroutinesCodeStatsCalculator<MutableAtomicSourceCodeStats>() {
 
-    override fun initCodeStats(): MutableAtomicCodeStats {
+    override fun initCodeStats(): MutableAtomicSourceCodeStats {
         return buildCodeStats(0, 0L, 0L)
     }
 
-    override fun buildCodeStats(numOfFiles: Int, numOfCodeLines: Long,  numOfCommentLines: Long): MutableAtomicCodeStats {
-        return MutableAtomicCodeStats(numOfFiles, numOfCodeLines, numOfCommentLines)
+    override fun buildCodeStats(numOfFiles: Int, numOfCodeLines: Long,  numOfCommentLines: Long): MutableAtomicSourceCodeStats {
+        return MutableAtomicSourceCodeStats(numOfFiles, numOfCodeLines, numOfCommentLines)
     }
 
     override fun collectDirectoryResult(
-        directoryCodeStats: List<CodeStats>,
-        codeStats: MutableAtomicCodeStats
-    ): MutableAtomicCodeStats {
-        directoryCodeStats.forEach { codeStats.append(it) }
+        directorySourceCodeStats: List<SourceCodeStats>,
+        codeStats: MutableAtomicSourceCodeStats
+    ): MutableAtomicSourceCodeStats {
+        directorySourceCodeStats.forEach { codeStats.append(it) }
         return codeStats
     }
 }

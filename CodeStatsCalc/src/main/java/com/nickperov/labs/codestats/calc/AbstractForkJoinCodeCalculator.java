@@ -1,6 +1,6 @@
 package com.nickperov.labs.codestats.calc;
 
-import com.nickperov.labs.codestats.calc.model.CodeStats;
+import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
 import kotlin.Pair;
 
 import java.io.File;
@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 import static com.nickperov.labs.codestats.calc.AbstractForkJoinCodeCalculator.CodeStatsTask;
 
-public abstract class AbstractForkJoinCodeCalculator<T extends CodeStats, RT extends CodeStatsTask<T>> extends AbstractIterativeCodeStatsCalculator<T> {
+public abstract class AbstractForkJoinCodeCalculator<T extends SourceCodeStats, RT extends CodeStatsTask<T>> extends AbstractIterativeCodeStatsCalculator<T> {
 
     final Function<Integer, Integer> thresholdFunction;
 
@@ -29,7 +29,7 @@ public abstract class AbstractForkJoinCodeCalculator<T extends CodeStats, RT ext
     }
 
     @Override
-    CodeStats calcDirectory(File file, Supplier<T> codeStatsSupplier) {
+    SourceCodeStats calcDirectory(File file, Supplier<T> codeStatsSupplier) {
         final RT recursiveTask = getRecursiveTask(collectSrcFiles(file));
         final ForkJoinPool pool = new ForkJoinPool();
         return pool.invoke(recursiveTask);
@@ -37,16 +37,16 @@ public abstract class AbstractForkJoinCodeCalculator<T extends CodeStats, RT ext
 
     abstract RT getRecursiveTask(List<File> srcFiles);
 
-    static abstract class CodeStatsTask<T extends CodeStats> extends RecursiveTask<T> {
+    static abstract class CodeStatsTask<T extends SourceCodeStats> extends RecursiveTask<T> {
 
         final int threshold;
         final int start;
         final int end;
         final List<File> srcFiles;
-        final Function<File, CodeStats> srcFileCalculator;
+        final Function<File, SourceCodeStats> srcFileCalculator;
         final Supplier<T> codeStatsSupplier;
 
-        public CodeStatsTask(int threshold, List<File> srcFiles, int start, int end, Function<File, CodeStats> srcFileCalculator, Supplier<T> codeStatsSupplier) {
+        public CodeStatsTask(int threshold, List<File> srcFiles, int start, int end, Function<File, SourceCodeStats> srcFileCalculator, Supplier<T> codeStatsSupplier) {
             this.threshold = threshold;
             this.srcFiles = srcFiles;
             this.start = start;
@@ -57,7 +57,7 @@ public abstract class AbstractForkJoinCodeCalculator<T extends CodeStats, RT ext
 
         abstract Pair<CodeStatsTask<T>, CodeStatsTask<T>> createSubTasks(int middle);
 
-        abstract T joinResults(T first, CodeStats second);
+        abstract T joinResults(T first, SourceCodeStats second);
 
         abstract T computeCodeStats();
 
