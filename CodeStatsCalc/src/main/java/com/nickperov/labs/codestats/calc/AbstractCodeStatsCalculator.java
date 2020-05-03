@@ -2,7 +2,6 @@ package com.nickperov.labs.codestats.calc;
 
 import com.nickperov.labs.codestats.calc.model.CodeStats;
 import com.nickperov.labs.codestats.calc.model.CodeStatsCalculator;
-import kotlin.Pair;
 import kotlin.Triple;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,22 +11,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.function.Supplier;
-import java.util.regex.Pattern;
 
 public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implements CodeStatsCalculator {
 
-    private enum CommentType {SL, ML}
-
     private static final String javaFile = ".java";
     private static final String kotlinFile = ".kt";
-
-    private static final String singleLineCommentCharSeq = "//";
-    private static final String multiLineCommentStartCharSeq = "/*";
-    private static final String multiLineCommentEndCharSeq = "*/";
-    private static final Pattern singleLineComment = Pattern.compile("^\\s*" + Pattern.quote(singleLineCommentCharSeq));
-    private static final Pattern multiLineCommentStart = Pattern.compile("^\\s*" + Pattern.quote(multiLineCommentStartCharSeq));
-    private static final Pattern multiLineCommentEnd = Pattern.compile("^.*" + Pattern.quote(multiLineCommentEndCharSeq) + "\\s*");
-
+    
     @NotNull
     @Override
     public CodeStats calcDirectory(final File directory) {
@@ -48,8 +37,7 @@ public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implement
     CodeStats calcSourceFile(final File file) {
         if (!file.isFile())
             return buildCodeStats(0, 0L, 0L);
-
-
+            
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
             var isCommentBlock = false;
             long numberOfCommentLines = 0L;
@@ -63,7 +51,6 @@ public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implement
                 numberOfCommentLines += lineStats.getSecond();
                 isCommentBlock = lineStats.getThird();
             }
-
             return buildCodeStats(1, numOfCodeLines, numberOfCommentLines);
         } catch (IOException e) {
             e.printStackTrace();
@@ -119,53 +106,7 @@ public abstract class AbstractCodeStatsCalculator<T extends CodeStats> implement
         }
         return new Triple<>(numOfCodeLines, numOfCommentLines, isOpenComment);
     }
-
-    private static CommentType testLineContainsComment(final String line) {
-        final int indexOfSlComment = line.indexOf("//");
-        final int indexOfMlComment = line.indexOf("/*");
-
-        if ((indexOfSlComment == -1 && indexOfMlComment != -1) || (indexOfMlComment != -1 && (indexOfSlComment > indexOfMlComment))) {
-            // Comment block start
-            return CommentType.ML;
-        } else if ((indexOfSlComment != -1 && indexOfMlComment == -1) || (indexOfSlComment != -1 && (indexOfSlComment < indexOfMlComment))) {
-            return CommentType.SL;
-        }
-
-        return null;
-    }
-
-    private static boolean testLineIsSingleComment(final String line) {
-        return singleLineComment.matcher(line).find();
-    }
-
-    private static boolean testLineIsMultiCommentStart(final String line) {
-        return multiLineCommentStart.matcher(line).find();
-    }
-
-    private static boolean testLineIsMultiCommentEnd(final String line) {
-        return multiLineCommentEnd.matcher(line).matches();
-    }
-
-    private static boolean testLineContainsMultiCommentEnd(final String line) {
-        return line.contains(multiLineCommentEndCharSeq);
-    }
-
-    private static int getLineCommentBlockOpenIndex(final int currentIndex, final String line) {
-        return line.indexOf(multiLineCommentStartCharSeq, currentIndex);
-    }
-
-    private static boolean testLineCommentBlockClosed(final int currentIndex, final String line) {
-        final var blockCloseIndex = line.indexOf(multiLineCommentEndCharSeq, currentIndex);
-        if (blockCloseIndex != -1) {
-            final var blockOpenIndex = getLineCommentBlockOpenIndex(currentIndex, line);
-            if (blockOpenIndex != -1) {
-                return testLineCommentBlockClosed(blockCloseIndex, line);
-            }
-        }
-        return false;
-    }
-
-
+    
     CodeStats buildCodeStats(final int numOfFiles, final long numOfCodeLines, final long numberOfCommentLines) {
         return new CodeStats() {
 
