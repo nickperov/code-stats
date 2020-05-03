@@ -16,7 +16,7 @@ public abstract class AbstractCodeStatsCalculator<T extends SourceCodeStats> imp
 
     private static final String javaFile = ".java";
     private static final String kotlinFile = ".kt";
-    
+
     @NotNull
     @Override
     public SourceCodeStats calcDirectory(final File directory) {
@@ -37,7 +37,7 @@ public abstract class AbstractCodeStatsCalculator<T extends SourceCodeStats> imp
     SourceCodeStats calcSourceFile(final File file) {
         if (!file.isFile())
             return buildCodeStats(0, 0L, 0L);
-            
+
         try (BufferedReader fileReader = new BufferedReader(new FileReader(file))) {
             var isCommentBlock = false;
             var numberOfCommentLines = 0L;
@@ -58,16 +58,14 @@ public abstract class AbstractCodeStatsCalculator<T extends SourceCodeStats> imp
 
         return buildCodeStats(0, 0L, 0L);
     }
-    
-    // TODO check empty comments 
-    
+
     // Return number of code lines, comment lines and is comment open or not 
     private static LineCodeStats calcLine(final boolean isCommentBlock, final String line) {
-        
+
         var isOpenComment = isCommentBlock;
         var isComment = false;
         var isCode = false;
-        var numOfCommentLines = isCommentBlock ? 1 : 0;
+        var numOfCommentLines = 0;
         var numOfCodeLines = 0;
 
         var characters = line.toCharArray();
@@ -88,12 +86,19 @@ public abstract class AbstractCodeStatsCalculator<T extends SourceCodeStats> imp
                 // Skip empty symbols
                 if ((ch == '/') && (i < (characters.length - 1)) && (characters[i + 1] == '/')) {
                     // '//' Found => the rest of the line is single line comment
-                    numOfCommentLines++;
+                    // Check whether the comment is not empty
+                    for (int k = i + 2; k < characters.length; k++) {
+                        if (characters[k] > 32) {
+                            numOfCommentLines++;
+                            break;
+                        }
+                    }
                     break;
                 } else if ((ch == '/') && (i < (characters.length - 1)) && (characters[i + 1] == '*')) {
                     // '/*' Found => start of new comment block
                     i++;
-                    numOfCommentLines++;
+                    isOpenComment = true;
+                    //numOfCommentLines++;
                 } else if (ch != ';' && !isCode) {
                     // Non empty, not end of the line and non comment symbol => start of new code line
                     isCode = true;
@@ -106,7 +111,7 @@ public abstract class AbstractCodeStatsCalculator<T extends SourceCodeStats> imp
         }
         return new LineCodeStats(numOfCodeLines, numOfCommentLines, isOpenComment);
     }
-    
+
     SourceCodeStats buildCodeStats(final int numOfFiles, final long numOfCodeLines, final long numberOfCommentLines) {
         return new SourceCodeStats() {
 
