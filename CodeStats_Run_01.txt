@@ -1,0 +1,37 @@
+
+Benchmark                                          (calcType)     (path)  Mode  Cnt            Score            Error  Units
+
+CodeStatsCalcBenchmark.calcCodeStats      CoroutinesImmutable        ../  avgt   10      9080152.068 ±      84137.497  ns/op
+CodeStatsCalcBenchmark.calcCodeStats        CoroutinesMutable        ../  avgt   10      9347646.899 ±     147193.352  ns/op
+CodeStatsCalcBenchmark.calcCodeStats       STRecursiveMutable        ../  avgt   10     27559505.351 ±    2656164.736  ns/op
+CodeStatsCalcBenchmark.calcCodeStats     STRecursiveImmutable        ../  avgt   10     31986587.867 ±     558787.174  ns/op
+CodeStatsCalcBenchmark.calcCodeStats  StreamParallelImmutable        ../  avgt   10     51754494.567 ±     450614.589  ns/op
+CodeStatsCalcBenchmark.calcCodeStats    StreamParallelMutable        ../  avgt   10     52906290.758 ±     519444.919  ns/op
+CodeStatsCalcBenchmark.calcCodeStats       StreamSeqImmutable        ../  avgt   10     54933544.475 ±     433330.644  ns/op
+CodeStatsCalcBenchmark.calcCodeStats         StreamSeqMutable        ../  avgt   10     55391189.931 ±     297582.288  ns/op
+CodeStatsCalcBenchmark.calcCodeStats        ForkJoinImmutable        ../  avgt   10     60970099.470 ±    3663024.398  ns/op
+CodeStatsCalcBenchmark.calcCodeStats          ForkJoinMutable        ../  avgt   10     61765768.669 ±    4744333.231  ns/op
+
+
+CodeStatsCalcBenchmark.calcCodeStats      CoroutinesImmutable     ../../  avgt   10     46404627.782 ±     267752.299  ns/op
+CodeStatsCalcBenchmark.calcCodeStats        CoroutinesMutable     ../../  avgt   10     48197052.848 ±    2276292.103  ns/op
+CodeStatsCalcBenchmark.calcCodeStats     STRecursiveImmutable     ../../  avgt   10    229306440.343 ±    2001284.275  ns/op
+CodeStatsCalcBenchmark.calcCodeStats       STRecursiveMutable     ../../  avgt   10    266176336.255 ±    2982423.168  ns/op
+CodeStatsCalcBenchmark.calcCodeStats    StreamParallelMutable     ../../  avgt   10    372959657.407 ±    2596711.859  ns/op
+CodeStatsCalcBenchmark.calcCodeStats  StreamParallelImmutable     ../../  avgt   10    373412979.259 ±    2827052.261  ns/op
+CodeStatsCalcBenchmark.calcCodeStats        ForkJoinImmutable     ../../  avgt   10    379068405.556 ±    3602786.639  ns/op
+CodeStatsCalcBenchmark.calcCodeStats         StreamSeqMutable     ../../  avgt   10    397992949.615 ±    2200063.156  ns/op
+CodeStatsCalcBenchmark.calcCodeStats       StreamSeqImmutable     ../../  avgt   10    399490191.969 ±    5259633.285  ns/op
+CodeStatsCalcBenchmark.calcCodeStats          ForkJoinMutable     ../../  avgt   10    399794455.643 ±   31793506.262  ns/op
+
+
+CodeStatsCalcBenchmark.calcCodeStats      CoroutinesImmutable  ../../../  avgt   10   5464712210.000 ±  133497396.072  ns/op
+CodeStatsCalcBenchmark.calcCodeStats        CoroutinesMutable  ../../../  avgt   10   5598557835.000 ±  254900050.933  ns/op
+CodeStatsCalcBenchmark.calcCodeStats     STRecursiveImmutable  ../../../  avgt   10  26352211000.000 ±  831215504.953  ns/op
+CodeStatsCalcBenchmark.calcCodeStats       STRecursiveMutable  ../../../  avgt   10  32845694590.000 ±  263597850.854  ns/op
+CodeStatsCalcBenchmark.calcCodeStats  StreamParallelImmutable  ../../../  avgt   10  40199994480.000 ± 1043029029.819  ns/op
+CodeStatsCalcBenchmark.calcCodeStats    StreamParallelMutable  ../../../  avgt   10  40345007240.000 ± 1804394038.300  ns/op
+CodeStatsCalcBenchmark.calcCodeStats         StreamSeqMutable  ../../../  avgt   10  40465062240.000 ±  471773664.236  ns/op
+CodeStatsCalcBenchmark.calcCodeStats       StreamSeqImmutable  ../../../  avgt   10  40400951560.000 ±  563975580.894  ns/op
+CodeStatsCalcBenchmark.calcCodeStats          ForkJoinMutable  ../../../  avgt   10  42099674100.000 ± 4765907006.420  ns/op
+CodeStatsCalcBenchmark.calcCodeStats        ForkJoinImmutable  ../../../  avgt   10  44911867340.000 ± 4715493626.116  ns/op
