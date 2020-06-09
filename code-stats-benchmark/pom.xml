@@ -3,49 +3,33 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>CodeStats</artifactId>
+        <artifactId>code-stats</artifactId>
         <groupId>com.nickperov.labs</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>CodeStatsBenchmark</artifactId>
+    <artifactId>code-stats-benchmark</artifactId>
+    <name>Code Stats Benchmark</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jmh.version>1.22</jmh.version>
-        <java.version>11</java.version>
         <jar.name>CodeStatsBenchmark</jar.name>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.nickperov.labs</groupId>
-            <artifactId>CodeStatsCalc</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>code-stats-calc</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
-            <version>${jmh.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-generator-annprocess</artifactId>
-            <version>${jmh.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.nickperov.labs</groupId>
-            <artifactId>CodeStatsCalc</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.nickperov.labs</groupId>
-            <artifactId>CodeStatsCalc</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
