@@ -1,0 +1,1 @@
+java -jar code-stats-cli.jar

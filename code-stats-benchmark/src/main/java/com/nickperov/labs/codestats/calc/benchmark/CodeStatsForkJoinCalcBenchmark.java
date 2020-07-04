@@ -1,21 +1,21 @@
 package com.nickperov.labs.codestats.calc.benchmark;
 
-import com.nickperov.labs.codestats.calc.*;
+import com.nickperov.labs.codestats.calc.ImmutableForkJoinCodeCalculator;
+import com.nickperov.labs.codestats.calc.MutableForkJoinCodeCalculator;
 import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
 import org.openjdk.jmh.annotations.*;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-@Fork(value = 1, warmups = 1)
+@Fork(value = 2, warmups = 1)
 @Warmup(iterations = 3)
 @Measurement(iterations = 5)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
-//@Threads(value = -1)
 public class CodeStatsForkJoinCalcBenchmark {
-    
+
     private String path = "../../../";
 
     @Param({"1000", "10000", "100000"})
@@ -23,21 +23,21 @@ public class CodeStatsForkJoinCalcBenchmark {
 
     @Benchmark
     public SourceCodeStats calcCodeStatsImmutable() {
-        return new ImmutableForkJoinCodeCalculator(threshold).calcDirectory(new File(path));
+        return new ImmutableForkJoinCodeCalculator(this.threshold).calcDirectory(new File(this.path));
     }
 
     @Benchmark
     public SourceCodeStats calcCodeStatsMutable() {
-        return new MutableForkJoinCodeCalculator(threshold).calcDirectory(new File(path));
+        return new MutableForkJoinCodeCalculator(this.threshold).calcDirectory(new File(this.path));
     }
 
     @Benchmark
     public SourceCodeStats calcCodeStatsImmutableFormula() {
-        return new ImmutableForkJoinCodeCalculator().calcDirectory(new File(path));
+        return new ImmutableForkJoinCodeCalculator().calcDirectory(new File(this.path));
     }
 
     @Benchmark
     public SourceCodeStats calcCodeStatsMutableFormula() {
-        return new MutableForkJoinCodeCalculator().calcDirectory(new File(path));
+        return new MutableForkJoinCodeCalculator().calcDirectory(new File(this.path));
     }
 }

@@ -13,7 +13,7 @@
     <name>Code Stats Benchmark</name>
 
     <properties>
-        <jar.name>CodeStatsBenchmark</jar.name>
+        <jar.name>code-stats-benchmark</jar.name>
     </properties>
 
     <dependencies>
@@ -33,19 +33,12 @@
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>my-local-repo</id>
-            <url>${env.M2_REPO}</url>
-        </repository>
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.5.1</version>
                 <configuration>
                     <compilerVersion>${java.version}</compilerVersion>
                     <source>${java.version}</source>
@@ -55,7 +48,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

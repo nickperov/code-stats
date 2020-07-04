@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-         
+
     <parent>
         <artifactId>code-stats</artifactId>
         <groupId>com.nickperov.labs</groupId>
@@ -12,23 +12,11 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>code-stats-cli</artifactId>
     <name>Code Stats CLI</name>
-    
-    <properties>
-        <kotlin.version>1.3.72</kotlin.version>
-        <main.class>com.nickperov.stud.kotlin.cli.sample.AppKt</main.class>
-    </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jetbrains.kotlinx</groupId>
-                <artifactId>kotlinx-cli</artifactId>
-                <version>0.2.1</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <properties>
+        <main.class>com.nickperov.labs.codestats.calc.cli.AppKt</main.class>
+        <jar.name>code-stats-cli</jar.name>
+    </properties>
 
     <dependencies>
         <!--<dependency>
@@ -37,18 +25,15 @@
             <version>${kotlin.version}</version>
         </dependency>-->
         <dependency>
+            <groupId>com.nickperov.labs</groupId>
+            <artifactId>code-stats-calc</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-cli-jvm</artifactId>
-            <version>0.2.1</version>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>kotlin-x</id>
-            <url>https://dl.bintray.com/kotlin/kotlinx/</url>
-        </repository>
-    </repositories>
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
@@ -58,6 +43,9 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
+                <configuration>
+                    <jvmTarget>11</jvmTarget>
+                </configuration>
                 <executions>
                     <execution>
                         <id>compile</id>
@@ -85,6 +73,8 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>${jar.name}</finalName>
                             <archive>
                                 <manifest>
                                     <mainClass>${main.class}</mainClass>
@@ -111,15 +101,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
-
-
 </project>

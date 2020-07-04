@@ -8,23 +8,24 @@ import org.openjdk.jmh.annotations.*;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-@Fork(value = 1)
+@Fork(value = 2, warmups = 1)
+@Warmup(iterations = 3)
 @Measurement(iterations = 5)
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Benchmark)
 public class CodeStatsParallelVsSeqBenchmark {
-    
+
     private String path = "../../";
 
     @Benchmark
     public SourceCodeStats calcCodeStatsSTRecursiveImmutable() {
-        return new RecursiveImmutableCodeStatsCalculator().calcDirectory(new File(path));
+        return new RecursiveImmutableCodeStatsCalculator().calcDirectory(new File(this.path));
     }
 
     @Benchmark
     public SourceCodeStats calcCodeStatsForkJoinMutable() {
-        return new MutableForkJoinCodeCalculator(10).calcDirectory(new File(path));
+        return new MutableForkJoinCodeCalculator(10).calcDirectory(new File(this.path));
     }
 }
 
