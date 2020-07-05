@@ -19,7 +19,17 @@
     <dependencies>
         <dependency>
             <groupId>com.nickperov.labs</groupId>
-            <artifactId>code-stats-calc</artifactId>
+            <artifactId>code-stats-calc-st</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nickperov.labs</groupId>
+            <artifactId>code-stats-calc-mt</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.nickperov.labs</groupId>
+            <artifactId>code-stats-calc-coroutines</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -48,7 +58,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>

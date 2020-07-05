@@ -1,6 +1,6 @@
 package com.nickperov.labs.codestats.calc.cli
 
-import com.nickperov.labs.codestats.calc.CoroutinesImmutableCodeStatsCalculator
+import com.nickperov.labs.codestats.calc.coroutines.CoroutinesImmutableCodeStatsCalculator
 import kotlinx.cli.*
 import java.io.File
 

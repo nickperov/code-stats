@@ -12,13 +12,18 @@
 
     <modules>
         <module>code-stats-benchmark</module>
-        <module>code-stats-calc</module>
+        <module>code-stats-calc-base</module>
+        <module>code-stats-calc-common</module>
+        <module>code-stats-calc-st</module>
+        <module>code-stats-calc-mt</module>
+        <module>code-stats-calc-coroutines</module>
+
         <module>code-stats-cli</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.3.61</kotlin.version>
+        <kotlin.version>1.3.72</kotlin.version>
         <kotlin.coroutines.version>1.3.3</kotlin.coroutines.version>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlinx-cli.version>0.2.1</kotlinx-cli.version>
@@ -30,6 +35,10 @@
     </properties>
 
     <repositories>
+        <repository>
+            <id>maven-central</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
         <repository>
             <id>kotlin-x</id>
             <url>https://dl.bintray.com/kotlin/kotlinx/</url>
@@ -75,6 +84,20 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

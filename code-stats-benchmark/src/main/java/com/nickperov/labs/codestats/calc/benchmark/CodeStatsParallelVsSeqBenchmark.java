@@ -1,8 +1,8 @@
 package com.nickperov.labs.codestats.calc.benchmark;
 
-import com.nickperov.labs.codestats.calc.MutableForkJoinCodeCalculator;
-import com.nickperov.labs.codestats.calc.RecursiveImmutableCodeStatsCalculator;
-import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
+import com.nickperov.labs.codestats.calc.base.model.SourceCodeStats;
+import com.nickperov.labs.codestats.calc.mt.MutableForkJoinCodeCalculator;
+import com.nickperov.labs.codestats.calc.st.RecursiveImmutableCodeStatsCalculator;
 import org.openjdk.jmh.annotations.*;
 
 import java.io.File;

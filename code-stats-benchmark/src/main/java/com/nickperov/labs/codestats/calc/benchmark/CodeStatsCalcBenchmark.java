@@ -1,8 +1,17 @@
 package com.nickperov.labs.codestats.calc.benchmark;
 
-import com.nickperov.labs.codestats.calc.*;
-import com.nickperov.labs.codestats.calc.model.CodeStatsCalculator;
-import com.nickperov.labs.codestats.calc.model.SourceCodeStats;
+import com.nickperov.labs.codestats.calc.base.model.CodeStatsCalculator;
+import com.nickperov.labs.codestats.calc.base.model.SourceCodeStats;
+import com.nickperov.labs.codestats.calc.coroutines.CoroutinesImmutableCodeStatsCalculator;
+import com.nickperov.labs.codestats.calc.coroutines.CoroutinesMutableCodeStatsCalculator;
+import com.nickperov.labs.codestats.calc.mt.ImmutableForkJoinCodeCalculator;
+import com.nickperov.labs.codestats.calc.mt.MutableForkJoinCodeCalculator;
+import com.nickperov.labs.codestats.calc.mt.StreamParallelImmutableCodeStatsCalculator;
+import com.nickperov.labs.codestats.calc.mt.StreamParallelMutableCodeStatsCalculator;
+import com.nickperov.labs.codestats.calc.st.RecursiveImmutableCodeStatsCalculator;
+import com.nickperov.labs.codestats.calc.st.RecursiveMutableCodeStatsCalculator;
+import com.nickperov.labs.codestats.calc.st.StreamSeqImmutableCodeStatsCalculator;
+import com.nickperov.labs.codestats.calc.st.StreamSeqMutableCodeStatsCalculator;
 import org.openjdk.jmh.annotations.*;
 
 import java.io.File;

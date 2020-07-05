@@ -5,7 +5,11 @@ This project is an experiment. The purpose of this experiment is to explore kotl
 java multithreading approaches.
 
 #### Project consists of modules:
-* __code-stats-calc__ - code statistics calculator library;
+* __code-stats-calc-base__ - code statistics calculator library base classes;
+* __code-stats-calc-common__ - code statistics calculator library common classes;
+* __code-stats-calc-st__ - code statistics calculator library single thread implementation;
+* __code-stats-calc-mt__ - code statistics calculator library multi thread implementation;
+* __code-stats-calc-coroutines__ - code statistics calculator library coroutines implementation;
 * __code-stats-benchmark__ - JMH benchmark;
 * __code-stat-cli__ - java CLI tool.
 
