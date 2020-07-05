@@ -7,9 +7,9 @@ import java.io.File
 abstract class CodeStatsCalculatorTest {
 
     private val path = "../"
-    private val numOfFiles = 48
-    private val numOfCodeLines = 3746L
-    private val numOfCommentLines = 165L
+    private val numOfFiles = 50
+    private val numOfCodeLines = 3781L
+    private val numOfCommentLines = 176L
 
     private fun getDirectory(): File {
         val dir = File(path)
