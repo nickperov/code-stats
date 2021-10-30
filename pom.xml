@@ -23,13 +23,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.3.72</kotlin.version>
-        <kotlin.coroutines.version>1.3.3</kotlin.coroutines.version>
+        <kotlin.version>1.5.31</kotlin.version>
+        <kotlin.coroutines.version>1.5.2</kotlin.coroutines.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <kotlinx-cli.version>0.2.1</kotlinx-cli.version>
-        <junit.version>4.13.1</junit.version>
+        <kotlinx-cli.version>0.3.3</kotlinx-cli.version>
+        <junit.version>4.13.2</junit.version>
         <java.version>11</java.version>
-        <jmh.version>1.22</jmh.version>
+        <jmh.version>1.33</jmh.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
