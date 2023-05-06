@@ -30,7 +30,7 @@ CodeStatsCalcBenchmark.calcCodeStats         CoroutinesMutable     ../../  avgt 
 CodeStatsCalcBenchmark.calcCodeStats      STRecursiveImmutable     ../../  avgt   10   2463.780 ±   90.885  ms/op
 CodeStatsCalcBenchmark.calcCodeStats        STRecursiveMutable     ../../  avgt   10   3053.221 ±  126.101  ms/op
 CodeStatsCalcBenchmark.calcCodeStats   StreamParallelImmutable     ../../  avgt   10   3874.116 ±   32.705  ms/op
-CodeStatsCalcBenchmark.calcCodeStats  ForkJoinImmutableTh_1000     ../../  avgt   10   3928.650 ±   74.697  ms/op
+CodeStatsCalcBenchmark.calcCodeStats  ForkJoinImmutableTh_1000     ../../  avgt   10   3928.650 ±   74.697  ms/op   
 CodeStatsCalcBenchmark.calcCodeStats     StreamParallelMutable     ../../  avgt   10   3932.527 ±   74.917  ms/op
 CodeStatsCalcBenchmark.calcCodeStats           ForkJoinMutable     ../../  avgt   10   3992.317 ±   23.040  ms/op
 CodeStatsCalcBenchmark.calcCodeStats         ForkJoinImmutable     ../../  avgt   10   4047.332 ±   89.205  ms/op

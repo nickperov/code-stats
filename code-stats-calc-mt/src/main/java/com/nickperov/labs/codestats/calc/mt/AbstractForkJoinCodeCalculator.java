@@ -32,7 +32,7 @@ public abstract class AbstractForkJoinCodeCalculator<T extends SourceCodeStats, 
     @Override
     protected SourceCodeStats calcDirectory(final File file, final Supplier<T> codeStatsSupplier) {
         final RT recursiveTask = getRecursiveTask(collectSrcFiles(file));
-        final ForkJoinPool pool = new ForkJoinPool();
+        final ForkJoinPool pool = new ForkJoinPool(Runtime.getRuntime().availableProcessors() * 10);
         return pool.invoke(recursiveTask);
     }
 
