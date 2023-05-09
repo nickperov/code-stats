@@ -10,7 +10,7 @@ public interface StreamCodeStatsCalculator {
 
     default Stream<? extends SourceCodeStats> buildStream(final File file) {
         return setStreamType(AbstractIterativeCodeStatsCalculator.collectSrcFiles(file).stream()
-                .map(getMappingFunction()))/*.map(cs -> (T) cs)*/;
+                .map(getMappingFunction()));
     }
 
     Stream<? extends SourceCodeStats> setStreamType(Stream<? extends SourceCodeStats> stream);

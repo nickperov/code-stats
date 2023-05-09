@@ -8,30 +8,43 @@ import kotlinx.coroutines.*
 import java.io.File
 import java.util.function.Supplier
 
-
 abstract class AbstractCoroutinesCodeStatsCalculator<T : SourceCodeStats> : AbstractCodeStatsCalculator<T>() {
 
     override fun calcDirectory(file: File, codeStatsSupplier: Supplier<T>): SourceCodeStats {
-        return runBlocking {
-            calcDirectoryAsync(file, codeStatsSupplier).await()
+        return runBlocking(Dispatchers.IO) {
+            calcDirectoryAsync(file, codeStatsSupplier, this).await()
         }
     }
 
-    private fun calcDirectoryAsync(file: File, codeStatsSupplier: Supplier<T>): Deferred<T> {
-        return GlobalScope.async {
-            calcDirectorySuspend(file, codeStatsSupplier)
+    suspend fun calcDirectory(directory: File, coroutineScope: CoroutineScope): SourceCodeStats {
+        return calcDirectoryAsync(directory, { initCodeStats() }, coroutineScope).await()
+    }
+
+    private fun calcDirectoryAsync(
+        file: File,
+        codeStatsSupplier: Supplier<T>,
+        coroutineScope: CoroutineScope
+    ): Deferred<T> {
+        return coroutineScope.async {
+            calcDirectorySuspend(file, codeStatsSupplier, coroutineScope)
         }
     }
 
-    private suspend fun calcAllDirectoryFiles(file: File, codeStatsSupplier: Supplier<T>): List<SourceCodeStats>? {
+    private suspend fun calcAllDirectoryFiles(
+        file: File,
+        codeStatsSupplier: Supplier<T>,
+        coroutineScope: CoroutineScope
+    ): List<SourceCodeStats>? {
         return file.listFiles()?.mapNotNull {
             when {
                 it.isDirectory -> {
-                    calcDirectoryAsync(it, codeStatsSupplier)
+                    calcDirectoryAsync(it, codeStatsSupplier, coroutineScope)
                 }
+
                 it.isFile && checkFileName(it.name) -> {
-                    calcSourceFileAsync(it)
+                    calcSourceFileAsync(it, coroutineScope)
                 }
+
                 else -> {
                     null
                 }
@@ -39,23 +52,21 @@ abstract class AbstractCoroutinesCodeStatsCalculator<T : SourceCodeStats> : Abst
         }?.map { it.await() }
     }
 
-    private suspend fun calcDirectorySuspend(file: File, codeStatsSupplier: Supplier<T>): T {
+    private suspend fun calcDirectorySuspend(
+        file: File,
+        codeStatsSupplier: Supplier<T>,
+        coroutineScope: CoroutineScope
+    ): T {
         val codeStats = codeStatsSupplier.get()
-        return calcAllDirectoryFiles(file, codeStatsSupplier)?.let { collectDirectoryResult(it, codeStats) }
-            ?: codeStats
-
+        return calcAllDirectoryFiles(file, codeStatsSupplier, coroutineScope)?.let {
+            collectDirectoryResult(it, codeStats)
+        } ?: codeStats
     }
 
     abstract fun collectDirectoryResult(directorySourceCodeStats: List<SourceCodeStats>, codeStats: T): T
 
-    private fun calcSourceFileAsync(file: File): Deferred<SourceCodeStats> {
-        return GlobalScope.async {
-            calcSourceFileSuspend(file)
-        }
-    }
-
-    private suspend fun calcSourceFileSuspend(file: File): SourceCodeStats {
-        return withContext(Dispatchers.IO) {
+    private fun calcSourceFileAsync(file: File, coroutineScope: CoroutineScope): Deferred<SourceCodeStats> {
+        return coroutineScope.async {
             calcSourceFile(file)
         }
     }

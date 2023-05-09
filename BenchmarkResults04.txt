@@ -1,0 +1,72 @@
+Benchmarks results
+
+# JMH version: 1.36
+# VM version: JDK 17.0.7, Java HotSpot(TM) 64-Bit Server VM, 17.0.7+8-LTS-224
+# VM invoker: /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home/bin/java
+# VM options: -Xmx16g -Xms16g
+
+# OS: Mac OS Ventura (version: 13.3.1)
+# Processor: Apple M1 Pro
+# Memory: 32 GB
+
+=======================================================================================================================
+Benchmark                                                                        (calcType)     (path)  (threshold)  Mode  Cnt      Score      Error  Units
+
+CodeStatsCalcBenchmark.calcCodeStats                                    CoroutinesImmutable        ../          N/A  avgt   10     19.301 ±    0.168  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                      CoroutinesMutable        ../          N/A  avgt   10     19.627 ±    0.538  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                   STRecursiveImmutable        ../          N/A  avgt   10     73.624 ±    2.053  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                     STRecursiveMutable        ../          N/A  avgt   10     79.310 ±    3.250  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                StreamParallelImmutable        ../          N/A  avgt   10     90.892 ±    0.353  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                  StreamParallelMutable        ../          N/A  avgt   10     91.487 ±    1.638  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                      ForkJoinImmutable        ../          N/A  avgt   10     97.940 ±    0.459  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                               ForkJoinImmutableTh_1000        ../          N/A  avgt   10     98.360 ±    0.392  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                               ForkJoinMutableTh_100000        ../          N/A  avgt   10     98.376 ±    0.406  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                        ForkJoinMutable        ../          N/A  avgt   10     99.337 ±    0.332  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                     StreamSeqImmutable        ../          N/A  avgt   10    100.846 ±    2.942  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                       StreamSeqMutable        ../          N/A  avgt   10    118.779 ±    6.361  ms/op
+
+CodeStatsCalcBenchmark.calcCodeStats                                      CoroutinesMutable     ../../          N/A  avgt   10    913.710 ±    3.167  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                    CoroutinesImmutable     ../../          N/A  avgt   10    914.922 ±    5.700  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                   STRecursiveImmutable     ../../          N/A  avgt   10   3908.214 ±  308.532  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                     STRecursiveMutable     ../../          N/A  avgt   10   4359.548 ±   62.309  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                               ForkJoinImmutableTh_1000     ../../          N/A  avgt   10   4981.587 ±   22.765  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                StreamParallelImmutable     ../../          N/A  avgt   10   4983.617 ±   60.966  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                  StreamParallelMutable     ../../          N/A  avgt   10   4984.320 ±   34.626  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                      ForkJoinImmutable     ../../          N/A  avgt   10   5236.071 ±   17.255  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                               ForkJoinMutableTh_100000     ../../          N/A  avgt   10   5239.861 ±   28.421  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                       StreamSeqMutable     ../../          N/A  avgt   10   5583.047 ±  497.452  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                     StreamSeqImmutable     ../../          N/A  avgt   10   5583.117 ±  604.547  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                        ForkJoinMutable     ../../          N/A  avgt   10   5736.346 ±  987.689  ms/op
+
+CodeStatsCalcBenchmark.calcCodeStats                                    CoroutinesImmutable  ../../../          N/A  avgt   10   1556.876 ±    7.747  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                      CoroutinesMutable  ../../../          N/A  avgt   10   1562.199 ±   16.406  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                   STRecursiveImmutable  ../../../          N/A  avgt   10   6508.373 ±  683.932  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                               ForkJoinImmutableTh_1000  ../../../          N/A  avgt   10   7842.534 ±  157.722  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                               ForkJoinMutableTh_100000  ../../../          N/A  avgt   10   8453.329 ±  162.075  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                       StreamSeqMutable  ../../../          N/A  avgt   10   8642.542 ±  942.047  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                     STRecursiveMutable  ../../../          N/A  avgt   10   8883.354 ±  383.974  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                StreamParallelImmutable  ../../../          N/A  avgt   10   9296.195 ±   58.312  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                  StreamParallelMutable  ../../../          N/A  avgt   10   9318.484 ±   72.979  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                      ForkJoinImmutable  ../../../          N/A  avgt   10  10052.574 ±   74.963  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                     StreamSeqImmutable  ../../../          N/A  avgt   10  10197.655 ±  336.437  ms/op
+CodeStatsCalcBenchmark.calcCodeStats                                        ForkJoinMutable  ../../../          N/A  avgt   10  10518.596 ± 1543.392  ms/op
+
+
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsImmutable                                   N/A        N/A         1000  avgt   10   7788.265 ±   83.518  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsMutable                                     N/A        N/A         1000  avgt   10   7808.891 ±   93.998  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsImmutableFormula                            N/A        N/A         1000  avgt   10   8422.514 ±   49.291  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsMutableFormula                              N/A        N/A         1000  avgt   10   8756.896 ± 1049.116  ms/op
+
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsMutable                                     N/A        N/A        10000  avgt   10   8403.113 ±   55.545  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsMutableFormula                              N/A        N/A        10000  avgt   10   8419.940 ±   62.377  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsImmutableFormula                            N/A        N/A        10000  avgt   10   8442.067 ±   63.873  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsImmutable                                   N/A        N/A        10000  avgt   10   8831.941 ±  846.295  ms/op
+
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsImmutable                                   N/A        N/A       100000  avgt   10   8405.065 ±   86.994  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsImmutableFormula                            N/A        N/A       100000  avgt   10   8407.110 ±   27.572  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsMutable                                     N/A        N/A       100000  avgt   10   8421.501 ±   43.271  ms/op
+CodeStatsForkJoinCalcBenchmark.calcCodeStatsMutableFormula                              N/A        N/A       100000  avgt   10   8430.064 ±   60.307  ms/op
+
+
+CodeStatsParallelVsSeqBenchmark.calcCodeStatsSTRecursiveImmutable                       N/A        N/A          N/A    ss   10   3631.623 ±   18.267  ms/op
+CodeStatsParallelVsSeqBenchmark.calcCodeStatsForkJoinMutable                            N/A        N/A          N/A    ss   10   4938.111 ±   16.540  ms/op

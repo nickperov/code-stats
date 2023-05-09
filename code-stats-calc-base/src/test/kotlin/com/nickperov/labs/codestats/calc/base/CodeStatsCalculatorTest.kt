@@ -1,15 +1,15 @@
 package com.nickperov.labs.codestats.calc.base
 
 import com.nickperov.labs.codestats.calc.base.model.CodeStatsCalculator
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import java.io.File
 
 abstract class CodeStatsCalculatorTest {
 
     private val path = "../"
     private val numOfFiles = 48
-    private val numOfCodeLines = 3769L
-    private val numOfCommentLines = 164L
+    private val numOfCodeLines = 3755L
+    private val numOfCommentLines = 163L
 
     private fun getDirectory(): File {
         val dir = File(path)
@@ -19,7 +19,6 @@ abstract class CodeStatsCalculatorTest {
 
     protected fun testCodeStatsCalculator(codeCalculator: CodeStatsCalculator) {
         val codeStats = codeCalculator.calcDirectory(getDirectory())
-        println("${codeStats.numberOfFiles()} - ${codeStats.numberOfCodeLines()} - ${codeStats.numberOfCommentLines()}")
         assertEquals(numOfFiles, codeStats.numberOfFiles())
         assertEquals(numOfCodeLines, codeStats.numberOfCodeLines())
         assertEquals(numOfCommentLines, codeStats.numberOfCommentLines())

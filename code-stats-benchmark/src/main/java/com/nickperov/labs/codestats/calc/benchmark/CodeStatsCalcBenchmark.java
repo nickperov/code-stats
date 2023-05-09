@@ -32,8 +32,8 @@ public class CodeStatsCalcBenchmark {
     }
 
     @Param({"STRecursiveMutable", "STRecursiveImmutable", "StreamSeqMutable", "StreamSeqImmutable",
-            "StreamParallelImmutable", "StreamParallelMutable", "ForkJoinImmutable", "ForkJoinMutable", "CoroutinesImmutable",
-            "CoroutinesMutable", "ForkJoinImmutableTh_1000", "ForkJoinMutableTh_100000",})
+            "StreamParallelImmutable", "StreamParallelMutable", "ForkJoinImmutable", "ForkJoinMutable", 
+            "CoroutinesImmutable", "CoroutinesMutable", "ForkJoinImmutableTh_1000", "ForkJoinMutableTh_100000",})
     private CalculatorType calcType;
 
     @Param({"../", "../../", "../../../"})
@@ -44,42 +44,18 @@ public class CodeStatsCalcBenchmark {
     @Setup(Level.Trial)
     public void initCalculator() {
         switch (this.calcType) {
-            case STRecursiveMutable:
-                this.codeStatsCalculator = new RecursiveMutableCodeStatsCalculator();
-                break;
-            case STRecursiveImmutable:
-                this.codeStatsCalculator = new RecursiveImmutableCodeStatsCalculator();
-                break;
-            case StreamSeqMutable:
-                this.codeStatsCalculator = new StreamSeqMutableCodeStatsCalculator();
-                break;
-            case StreamSeqImmutable:
-                this.codeStatsCalculator = new StreamSeqImmutableCodeStatsCalculator();
-                break;
-            case StreamParallelMutable:
-                this.codeStatsCalculator = new StreamParallelMutableCodeStatsCalculator();
-                break;
-            case StreamParallelImmutable:
-                this.codeStatsCalculator = new StreamParallelImmutableCodeStatsCalculator();
-                break;
-            case ForkJoinMutable:
-                this.codeStatsCalculator = new MutableForkJoinCodeCalculator();
-                break;
-            case ForkJoinImmutable:
-                this.codeStatsCalculator = new ImmutableForkJoinCodeCalculator();
-                break;
-            case CoroutinesMutable:
-                this.codeStatsCalculator = new CoroutinesMutableCodeStatsCalculator();
-                break;
-            case CoroutinesImmutable:
-                this.codeStatsCalculator = new CoroutinesImmutableCodeStatsCalculator();
-                break;
-            case ForkJoinImmutableTh_1000:
-                this.codeStatsCalculator = new ImmutableForkJoinCodeCalculator(1000);
-                break;
-            case ForkJoinMutableTh_100000:
-                this.codeStatsCalculator = new MutableForkJoinCodeCalculator(100000);
-                break;
+            case STRecursiveMutable -> this.codeStatsCalculator = new RecursiveMutableCodeStatsCalculator();
+            case STRecursiveImmutable -> this.codeStatsCalculator = new RecursiveImmutableCodeStatsCalculator();
+            case StreamSeqMutable -> this.codeStatsCalculator = new StreamSeqMutableCodeStatsCalculator();
+            case StreamSeqImmutable -> this.codeStatsCalculator = new StreamSeqImmutableCodeStatsCalculator();
+            case StreamParallelMutable -> this.codeStatsCalculator = new StreamParallelMutableCodeStatsCalculator();
+            case StreamParallelImmutable -> this.codeStatsCalculator = new StreamParallelImmutableCodeStatsCalculator();
+            case ForkJoinMutable -> this.codeStatsCalculator = new MutableForkJoinCodeCalculator();
+            case ForkJoinImmutable -> this.codeStatsCalculator = new ImmutableForkJoinCodeCalculator();
+            case CoroutinesMutable -> this.codeStatsCalculator = new CoroutinesMutableCodeStatsCalculator();
+            case CoroutinesImmutable -> this.codeStatsCalculator = new CoroutinesImmutableCodeStatsCalculator();
+            case ForkJoinImmutableTh_1000 -> this.codeStatsCalculator = new ImmutableForkJoinCodeCalculator(1000);
+            case ForkJoinMutableTh_100000 -> this.codeStatsCalculator = new MutableForkJoinCodeCalculator(100000);
         }
     }
 

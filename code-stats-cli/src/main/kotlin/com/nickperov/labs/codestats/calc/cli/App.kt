@@ -1,3 +1,5 @@
+@file:OptIn(DelicateCoroutinesApi::class)
+
 package com.nickperov.labs.codestats.calc.cli
 
 import com.nickperov.labs.codestats.calc.base.model.SourceCodeStats
@@ -11,7 +13,7 @@ fun main(args: Array<String>) {
 
     val progress = charArrayOf('|', '/', '-', '\\')
     val codeStats = CoroutinesImmutableCodeStatsCalculator()
-    
+
     val parser = ArgParser("code-stats")
     val directory by parser.option(ArgType.String, shortName = "d", description = "Input directory").required()
 
@@ -30,13 +32,13 @@ fun main(args: Array<String>) {
 
     try {
         var result: Optional<SourceCodeStats> = Optional.empty()
-        val calculation = GlobalScope.launch {
-            result = Optional.of(codeStats.calcDirectory(dir))
+        val calculation = GlobalScope.launch(Dispatchers.IO) {
+            result = Optional.of(codeStats.calcDirectory(dir, this))
             return@launch
         }
 
         runBlocking {
-            var progressindex = 0;
+            var progressIndex = 0
             while (true) {
                 if (calculation.isCompleted) {
                     print("\r")
@@ -45,17 +47,17 @@ fun main(args: Array<String>) {
                     throw RuntimeException("Calculation cancelled")
                 } else {
                     delay(100L)
-                    print("\r Calculating..." + progress[(progressindex++) % progress.size])
+                    print("\r Calculating..." + progress[(progressIndex++) % progress.size])
                 }
             }
         }
 
-        val codeStats = result.orElseThrow();
+        val statsResult = result.orElseThrow()
 
         println("Code stats result for directory: " + dir.absoluteFile.normalize().path)
-        println("   Number of source files: " + codeStats.numberOfFiles())
-        println("   Number of code lines: " + codeStats.numberOfCodeLines())
-        println("   Number of comment lines: " + codeStats.numberOfCommentLines())
+        println("   Number of source files: " + statsResult.numberOfFiles())
+        println("   Number of code lines: " + statsResult.numberOfCodeLines())
+        println("   Number of comment lines: " + statsResult.numberOfCommentLines())
     } catch (e: Exception) {
         println("Failed to calulate: " + e.message)
         return

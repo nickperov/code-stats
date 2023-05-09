@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class CodeStatsParallelVsSeqBenchmark {
 
-    private String path = "../../";
+    private final String path = "../../";
 
     @Benchmark
     public SourceCodeStats calcCodeStatsSTRecursiveImmutable() {

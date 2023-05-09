@@ -7,7 +7,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class AbstractIterativeCodeStatsCalculator<T extends SourceCodeStats> extends AbstractCodeStatsCalculator<T> {
@@ -23,9 +22,9 @@ public abstract class AbstractIterativeCodeStatsCalculator<T extends SourceCodeS
             return;
 
         final List<File> directories = Stream.of(Objects.requireNonNull(directory.listFiles()))
-                .filter(File::isDirectory).collect(Collectors.toList());
+                .filter(File::isDirectory).toList();
         final List<File> srcFiles = Stream.of(Objects.requireNonNull(directory.listFiles()))
-                .filter(File::isFile).filter(file -> AbstractCodeStatsCalculator.checkFileName(file.getName())).collect(Collectors.toList());
+                .filter(File::isFile).filter(file -> AbstractCodeStatsCalculator.checkFileName(file.getName())).toList();
 
         srcFilesAccumulator.addAll(srcFiles);
 

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class CodeStatsForkJoinCalcBenchmark {
 
-    private String path = "../../../";
+    private final String path = "../../../";
 
     @Param({"1000", "10000", "100000"})
     private Integer threshold;
