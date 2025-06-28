@@ -21,9 +21,11 @@ JMH Benchmark compares different single-thread and multi-thread approaches.
 ## Build instructions
 
 ### App build
-Build everything - mvn clean package.
+Before build clean all generated files - mvn clean.
 
-Build CLI app (./code-stats-cli/target/app/) - mvn clean deploy.
+Build everything - mvn package.
+
+Build CLI app (./code-stats-cli/target/app/) - mvn deploy.
 
 ### Benchmark
 To run all JMH benchmark - java -Xmx16g -Xms16g -jar ./code-stats-benchmark/target/code-stats-benchmark.jar
