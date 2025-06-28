@@ -7,10 +7,10 @@ import java.io.File
 abstract class CodeStatsCalculatorTest {
 
     private val path = "../"
-    private val numOfFiles = 48
-    private val numOfCodeLines = 3755L
-    private val numOfCommentLines = 163L
-
+    private val numOfFiles = 29
+    private val numOfCodeLines = 1175L // Code statistics counts 1165 (not counting imports)
+    private val numOfCommentLines = 157L
+    
     private fun getDirectory(): File {
         val dir = File(path)
         println("Scan directory: " + dir.toPath().toAbsolutePath().normalize())
